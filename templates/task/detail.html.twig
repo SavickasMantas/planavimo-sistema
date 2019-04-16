@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Schedules page{% endblock %}
+
+{% block content %}
+<div class="container" style="text-align: left; margin-left: 0px; width: 100%; max-width: 100%;">
+    <h1 class="mb-4">Your task:</h1>
+    <h5>Task ID:</h5>
+    <div class="col mb-3">{{ task.id }}</div>
+
+    <h5>Task title:</h5>
+    <div class="col mb-3">{{ task.title }}</div>
+
+
+    <h5>Task description:</h5>
+    <div class="col mb-3">{{ task.description }}</div>
+
+    <h5>Task detail:</h5>
+    <div class="col mb-3">{{ task.detail }}</div>
+
+    <h5>Task end date:</h5>
+    <div class="col mb-4">{{ task.taskEndDate|date('Y-m-d H:i') }}</div>
+
+    <a class="btn btn-success my-1" href="{{ path('schedule') }}/schedule_id={{ schedule_id }}/edit/{{ task.id }}">Edit</a>
+    <a class="btn btn-danger my-1" href="{{ path('schedule') }}/schedule_id={{ schedule_id }}/remove/{{ task.id }}" >Remove</a>
+
+</div>
+{% endblock %}

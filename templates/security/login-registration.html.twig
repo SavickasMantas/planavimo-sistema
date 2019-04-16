@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block content %}
+    {% if app.request.pathinfo == '/login' %}
+    <ul class="tab-group container">
+        <li class="tab"><a href="#signup" name="signup">Register</a></li>
+        <li class="tab active"><a href="#login" name="login">Sing in</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="login" class="container">
+            {% if error %}
+                <div>{{ error.messageKey|replace({"Invalid credentials." : "Invalid email or password."}) }}</div>
+            {% endif %}
+
+            <form action="{{ path('login') }}" method="post">
+                <label for="_email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Username" id="_email" name="_email" value="{{ last_username }}" required>
+
+                <label for="_password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" id="_password" name="_password" required>
+                <button type="submit">Login</button>
+
+            </form>
+        </div>
+        <div id="signup" class="container">
+            {{ form_start(form, {'action': path('register'),'attr': {'id':'registerform', 'onsubmit':'return signup_validation()'} } ) }}
+            {{ form_errors(form) }}
+            <div class="top-row">
+                <div class="field-wrap">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="field-wrap">
+                    {{ form_row(form.secondName) }}
+                </div>
+            </div>
+
+            {{ form_row(form.email) }}
+
+            {{ form_row(form.password) }}
+            <span id="signup_message"></span>
+            {{ form_row(form.save) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    {% elseif app.request.pathinfo == '/register' %}
+    <ul class="tab-group container">
+        <li class="tab active"><a href="#signup" name="signup">Register</a></li>
+        <li class="tab"><a href="#login" name="login">Sign in</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div id="signup" class="container">
+            {{ form_start(form, {'action': path('register'),'attr': {'id':'registerform', 'onsubmit':'return signup_validation()'} } ) }}
+            {{ form_errors(form) }}
+            <div class="top-row">
+                <div class="field-wrap">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="field-wrap">
+                    {{ form_row(form.secondName) }}
+                </div>
+            </div>
+
+            {{ form_row(form.email) }}
+
+            {{ form_row(form.password) }}
+            <span id="signup_message"></span>
+            {{ form_row(form.save) }}
+
+            {{ form_end(form) }}
+        </div>
+        <div id="login" class="container">
+            {% if error %}
+                <div>{{ error.messageKey|replace({"Invalid credentials." : "Invalid email or password."}) }}</div>
+            {% endif %}
+
+            <form action="{{ path('login') }}" method="post">
+                <label for="_email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Username" id="_email" name="_email" value="{{ last_username }}" required>
+
+                <label for="_password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" id="_password" name="_password" required>
+                <button type="submit">Login</button>
+
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    <a href="{{ path('connect_google') }}" class="btn-google container" >
+        <img src="{{ asset('image/btn_google_signin_normal.png') }}"
+            onmouseover="this.src='{{ asset('image/btn_google_signin_focus.png') }}'"
+            onmouseleave="this.src='{{ asset('image/btn_google_signin_normal.png') }}'"
+            style="height: 52px;"/>
+    </a>
+
+{% endblock %}

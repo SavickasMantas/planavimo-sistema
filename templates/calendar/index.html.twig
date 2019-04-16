@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <div id="calendar-holder"></div>
+    <script src='{{ asset('bundles/fullcalendar/js/fullcalendar/locale-all.js') }}'></script>
+    <script>
+        $(function () {
+            $('#calendar-holder').fullCalendar({
+                height: 600,
+                header: {
+                    left: 'prev, next, today',
+                    center: 'prevYear, title, nextYear',
+                    right: 'month, agendaWeek, agendaDay'
+                },
+                businessHours: {
+                    start: '09:00',
+                    end: '18:00',
+                    dow: [1, 2, 3, 4, 5]
+                },
+                lazyFetching: true,
+                navLinks: true,
+                selectable: true,
+                editable: false,
+                eventDurationEditable: true,
+                timeFormat: 'HH:mm',
+                eventSources: [
+                    {
+                        events: [ // put the array in the `events` property
+                            {% for schedule in schedules %}
+                            {
+                                title  : '{{ schedule.title }}',
+                                start  : '{{ schedule.scheduledEndDate|date('Y-m-d H:i:s') }}',
+                                url    : "{{ path('schedule') }}/detail/{{ schedule.id }}"
+                            },
+                            {% endfor %}
+                        ]
+                    },
+                    {
+                        events: [ // put the array in the `events` property
+                            {% for task in tasks %}
+                            {
+                                title  : '{{ task.title }}',
+                                start  : '{{ task.taskEndDate|date('Y-m-d H:i:s') }}',
+                                url    : "{{ path('schedule') }}/schedule_id={{ task.fkSchedule.id }}/detail/{{ task.id }}"
+                            },
+                            {% endfor %}
+                        ],
+                        color: '#a80404',     // an option!
+                        textColor: 'white' // an option!
+                    }
+
+                ]
+
+            });
+        });
+    </script>
+{% endblock %}

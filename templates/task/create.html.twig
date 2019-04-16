@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task page!{% endblock %}
+
+{% block content %}
+<div class="container" style="text-align: left; margin-left: 0px;">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_start(form) }}
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.detail) }}
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest" style="margin-bottom: 8px;">
+                    <label for="{{ form.taskEndDate.vars.id }}"
+                           class="{{ form.taskEndDate.vars.required ? 'required' }}" style="margin-bottom: 16px; width: 100%;">
+                        {{ form.taskEndDate.vars.label }}
+                    </label>
+                    {{ form_widget(form.taskEndDate) }}
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm'
+                });
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}
